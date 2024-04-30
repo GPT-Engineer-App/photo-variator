@@ -10,7 +10,7 @@ const Index = () => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    if (file && file.type.startsWith("image/")) {
+    if (file && (file.type.startsWith("image/") || file.type === "video/mp4" || file.type === "video/quicktime")) {
       const reader = new FileReader();
       reader.onload = (e) => setImageSrc(e.target.result);
       reader.readAsDataURL(file);
@@ -32,7 +32,7 @@ const Index = () => {
   return (
     <Center p={8} flexDirection="column">
       <VStack spacing={4}>
-        <Input type="file" accept="image/*" onChange={handleImageChange} icon={<FaUpload />} />
+        <Input type="file" accept="image/*,video/mp4,video/quicktime" onChange={handleImageChange} icon={<FaUpload />} />
         <Button leftIcon={<FaRandom />} colorScheme="teal" onClick={randomizeEffects}>
           Randomize Effects
         </Button>
@@ -54,13 +54,20 @@ const Index = () => {
         )}
         {imageSrc && (
           <Box>
-            <Image
-              src={imageSrc}
-              alt="Uploaded"
-              style={{
-                filter: `brightness(${brightness}%)`,
-              }}
-            />
+            {imageSrc.includes("data:image/") ? (
+              <Image
+                src={imageSrc}
+                alt="Uploaded"
+                style={{
+                  filter: `brightness(${brightness}%)`,
+                }}
+              />
+            ) : (
+              <video controls style={{ maxWidth: "100%", filter: `brightness(${brightness}%)` }}>
+                <source src={imageSrc} type={imageSrc.includes("data:video/mp4") ? "video/mp4" : "video/quicktime"} />
+                Your browser does not support the video tag.
+              </video>
+            )}
 
             <Slider aria-label="slider-ex-2" defaultValue={brightness} min={50} max={150} onChange={setBrightness}>
               <SliderTrack>
