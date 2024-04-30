@@ -6,6 +6,7 @@ const Index = () => {
   const [imageSrc, setImageSrc] = useState(null);
 
   const [brightness, setBrightness] = useState(100);
+  const [variationsCount, setVariationsCount] = useState(1);
   const toast = useToast();
 
   const handleImageChange = (event) => {
@@ -25,16 +26,27 @@ const Index = () => {
     }
   };
 
-  const randomizeEffects = () => {
-    setBrightness(50 + Math.random() * 100);
+  const randomizeEffects = (count) => {
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        setBrightness(50 + Math.random() * 100);
+        const link = document.createElement("a");
+        link.href = imageSrc;
+        link.download = `downloaded-image-${i + 1}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }, i * 100);
+    }
   };
 
   return (
     <Center p={8} flexDirection="column">
       <VStack spacing={4}>
         <Input type="file" accept="image/*,video/mp4,video/quicktime" onChange={handleImageChange} icon={<FaUpload />} />
-        <Button leftIcon={<FaRandom />} colorScheme="teal" onClick={randomizeEffects}>
-          Randomize Effects
+        <Input type="number" placeholder="Number of variations (1-50)" min={1} max={50} value={variationsCount} onChange={(e) => setVariationsCount(Math.min(50, Math.max(1, parseInt(e.target.value))))} />
+        <Button leftIcon={<FaRandom />} colorScheme="teal" onClick={() => randomizeEffects(variationsCount)}>
+          Generate Variations
         </Button>
         {imageSrc && imageSrc.includes("data:video/") && (
           <Button
