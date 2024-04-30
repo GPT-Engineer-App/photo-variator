@@ -11,7 +11,7 @@ function Navigation() {
       </Link>
       <Link href="/second-page" display="flex" alignItems="center" p="2">
         <FaHome />
-        <span style={{ marginLeft: "10px" }}>Second Page</span>
+        <span style={{ marginLeft: "10px" }}>Convert</span>
       </Link>
     </Box>
   );

@@ -4,7 +4,7 @@ import { Box, Text } from "@chakra-ui/react";
 function SecondPage() {
   return (
     <Box p="4">
-      <Text fontSize="xl">Welcome to the Second Page!</Text>
+      <Text fontSize="xl">Welcome to the Convert Page!</Text>
     </Box>
   );
 }
