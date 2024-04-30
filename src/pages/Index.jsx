@@ -36,6 +36,29 @@ const Index = () => {
         <Button leftIcon={<FaRandom />} colorScheme="teal" onClick={randomizeEffects}>
           Randomize Effects
         </Button>
+        {imageSrc && imageSrc.includes("data:video/") && (
+          <Button
+            leftIcon={<FaDownload />}
+            colorScheme="purple"
+            onClick={() => {
+              const link = document.createElement("a");
+              link.href = imageSrc;
+              link.download = "converted-video.gif";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              toast({
+                title: "Conversion Successful",
+                description: "Your video has been converted to GIF.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
+            }}
+          >
+            Convert to GIF
+          </Button>
+        )}
         {imageSrc && (
           <Button
             leftIcon={<FaDownload />}
