@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Image, Slider, SliderTrack, SliderFilledTrack, SliderThumb, VStack, Text, useToast, Input, Center } from "@chakra-ui/react";
-import { FaUpload, FaRandom } from "react-icons/fa";
+import { FaUpload, FaRandom, FaDownload } from "react-icons/fa";
 
 const Index = () => {
   const [imageSrc, setImageSrc] = useState(null);
@@ -26,7 +26,6 @@ const Index = () => {
   };
 
   const randomizeEffects = () => {
-    
     setBrightness(50 + Math.random() * 100);
   };
 
@@ -37,6 +36,22 @@ const Index = () => {
         <Button leftIcon={<FaRandom />} colorScheme="teal" onClick={randomizeEffects}>
           Randomize Effects
         </Button>
+        {imageSrc && (
+          <Button
+            leftIcon={<FaDownload />}
+            colorScheme="blue"
+            onClick={() => {
+              const link = document.createElement("a");
+              link.href = imageSrc;
+              link.download = "downloaded-image.png";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+          >
+            Download Image
+          </Button>
+        )}
         {imageSrc && (
           <Box>
             <Image
