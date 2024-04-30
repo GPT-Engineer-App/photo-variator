@@ -4,7 +4,7 @@ import { FaUpload, FaRandom } from "react-icons/fa";
 
 const Index = () => {
   const [imageSrc, setImageSrc] = useState(null);
-  const [rotation, setRotation] = useState(0);
+
   const [brightness, setBrightness] = useState(100);
   const toast = useToast();
 
@@ -26,7 +26,7 @@ const Index = () => {
   };
 
   const randomizeEffects = () => {
-    setRotation(Math.floor(Math.random() * 360));
+    
     setBrightness(50 + Math.random() * 100);
   };
 
@@ -44,16 +44,9 @@ const Index = () => {
               alt="Uploaded"
               style={{
                 filter: `brightness(${brightness}%)`,
-                transform: `rotate(${rotation}deg)`,
               }}
             />
-            <Slider aria-label="slider-ex-1" defaultValue={rotation} min={0} max={360} onChange={setRotation}>
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <SliderThumb />
-            </Slider>
-            <Text>Rotate</Text>
+
             <Slider aria-label="slider-ex-2" defaultValue={brightness} min={50} max={150} onChange={setBrightness}>
               <SliderTrack>
                 <SliderFilledTrack />
